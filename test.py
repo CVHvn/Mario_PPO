@@ -28,7 +28,7 @@ def get_args():
     parser.add_argument('--target_kl', type=float, default=None, help='Set target_kl = None if you do not use this. Roughly what KL divergence we think is appropriate between new and old policies after an update. This will get used for early stopping.')
 
     parser.add_argument("--is_normalize_advantage", type=bool, default=False, help = "Use normalize advantage or not")
-    parser.add_argument("--V_loss_type", type=str, default="Use mse or huber loss for value network")
+    parser.add_argument("--V_loss_type", type=str, default="mse", help = "Use mse or huber loss for value network")
 
     parser.add_argument('--total_step', type=int, default=int(5e6), help='Total step for training')
     parser.add_argument('--save_model_step', type=int, default=int(1e5), help='Number of steps between saving model')
