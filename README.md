@@ -124,23 +124,27 @@ How did I find the hyperparameters for each stage:
 
 * Is this code guaranteed to complete the stages if you try training?
   
-This hyperparameter does not guarantee you will complete the stage. But I am sure that you can win with this hyperparameter except you have a unlucky day (need 2-3 times to win because of randomness)
+  - This hyperparameter does not guarantee you will complete the stage. But I am sure that you can win with this hyperparameter except you have a unlucky day (need 2-3 times to win because of randomness)
 
 * How long do you train agents?
   
-Within a few hours to more than 1 day. Time depends on hardware, I use many different hardware so time will not be accurate.
+  - Within a few hours to more than 1 day. Time depends on hardware, I use many different hardware so time will not be accurate.
 
 * How can you improve this code?
   
-You can separate the test agent part into a separate thread or process. I'm not good at multi-threaded programming so I don't do this.
+  - You can separate the test agent part into a separate thread or process. I'm not good at multi-threaded programming so I don't do this.
 
 * Compare with A2C?
 
-It can be clearly seen that PPO is better, it can complete more difficult stages and learn how to go left to win (stages 4-4). 
+  - It can be clearly seen that PPO is better, it can complete more difficult stages and learn how to go left to win (stages 4-4). 
+  - Training time with PPO is generally significantly reduced because PPO is a more powerful algorithm, can work with 8 environments and usually does not reduce performance.
+  - PPO also has more hyperparameters so it requires more tuning or experience compared to A2C.
 
-Training time with PPO is generally significantly reduced because PPO is a more powerful algorithm, can work with 8 environments and usually does not reduce performance.
 
-PPO also has more hyperparameters so it requires more tuning or experience compared to A2C.
+* Why still not complete stage 8-4:
+  - First, stage 8-4 has a loop so it requires custom environment like stages 4-4 and 7-4.
+  - second, stage 8-4 is very long, it is the longest stage.
+  - Third, stage 8-4 requires finding hidden brick to get on the right path. It requires an algorithm to help explore the environment better.
 
 ## Requirements
 
