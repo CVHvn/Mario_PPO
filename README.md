@@ -3,7 +3,7 @@ Playing Super Mario Bros with Proximal Policy Optimization (PPO)
 
 ## Introduction
 
-My PyTorch Proximal Policy Optimization (PPO) implement to playing Super Mario Bros.
+My PyTorch Proximal Policy Optimization (PPO) implement to playing Super Mario Bros (This is [PPO paper](https://arxiv.org/abs/1707.06347)).
 <p align="center">
   <img src="demo/gif/1-1.gif" width="200">
   <img src="demo/gif/1-2.gif" width="200">
