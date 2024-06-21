@@ -63,15 +63,16 @@ You can find trained model in folder [trained_model](trained_model)
 Default parameter set:
 * Because I adjust the parameters for each stage, the optimal set of parameters that I recommend below is different from the parameters I train for the stages in the table below.
 * I don't have enough time and resources to test again, however I ran 2 stages such as 1-1, 1-4 and found that the default parameters I recommended were good enough.
+* RL is very sensitive to hyper parameters, so difficult stages like 5-3, 8-1 will require special parameter sets, the default parameters are for reference only.
 * num_envs: 8 (only need 16 for hard stages)
 * learn_step: 512 (to reach full episode)
 * batchsize: 64 (Best when experimenting)
 * epoch: 10 (not effect)
 * gamma: 0.9 (only need 0.99 for special stages)
-* learning_rate: 7e-5 (not effect too much)
+* learning_rate: 7e-5 (not effect too much, batchsize and learning_rate interact with each other like any other type of ML. However, when testing, I found batchsize had a stronger impact and a few tests of increasing or decreasing learning showed no difference.)
 * target_kl: 0.05 (Best when experimenting)
-* norm_adv: False (Best when experimenting)
-* loss_type: mse (not effect too much)
+* norm_adv: False (Best when experimenting, norm advantage helps the agent learn faster, but I feel like it makes the model worse in difficult stages.)
+* loss_type: mse (Huber is needed for some difficult stages like 5-3, 8-1 but for many stages, mse or huber is not much different. I think loss type also interacts with other hyperparameters, you can experiment further.)
 * gae_lambda: 0.95 (I don't tuning this parameter)
 
 How did I find the hyperparameters for each stage:
@@ -80,11 +81,11 @@ How did I find the hyperparameters for each stage:
 * Through many stages, I recognized important parameters and understood that some stages needed to adjust a few parameters.
 * learn_step should always be 512 because it ensures the agent will see the entire episode (256 is shorter than the number of epsiodes) especially for long episodes (I choose 512 as default).
 * norm_adv is usually not useful, sometimes it helps train faster (by default I won't need norm_adv)
-* loss_type is mse would be better, I find that unlike DQL, value network does not need stability from huber, mse is enough (default will be mse).
+* loss_type is mse would be better, I find that unlike DQL, value network does not need stability from huber, mse is enough (default will be mse). However, huber is needed for some stages like 5-3, I'm not sure about the interaction between huber loss, mse loss and other hyper parameters!
 * gamma is 0.9 for easy stages, when training fails with 0.9, try with 0.99 (harder stages often need gamma = 0.99)
 * learning_rate does not affect too much (should be set to 7e-5)
 * epoch have no effect
-* target_kl is importance to make agent learn stablize. But I can completed 30/31 stages (except 5-3) without target_kl. You can see that 30 stages used target_kl is None. But I can't tuning hyperparameters to complete stage 5-3. Than I use target_kl and find that with target_kl = 0.05, I can completed stage 5-3.
+* target_kl is importance to make agent learn stablize. But I can completed 30/31 stages (except 5-3) without target_kl. You can see that 30 stages used target_kl is None. But I can't tuning hyperparameters to complete stage 5-3. Than I use target_kl and find that with target_kl = 0.05, I can completed stage 5-3. A higher target_kl does not work because it is not strong enough to make the model stable. A smaller target_kl causes the model to learn very slowly, or even not learn at all. Of course, this parameter needs to be further tested and it is also possible that this parameter depends on other hyper parameters or depends on each specific stage.
 
 | World | Stage | num_envs | learn_step | batchsize | epoch | gamma | learning_rate | target_kl | norm_adv | loss_type | training_step | training_time  |
 |-------|-------|----------|------------|-----------|-------|-------|---------------|-----------|----------|-----------|---------------|----------------| 
