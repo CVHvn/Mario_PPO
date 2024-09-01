@@ -117,7 +117,7 @@ class CustomRewardAndDoneEnv(gym.Wrapper):
         if self.world == 4 and self.stage == 4:
             if (info["x_pos"] <= 1500 and info["y_pos"] < 127) or (
                     1588 <= info["x_pos"] < 2380 and info["y_pos"] >= 127):
-                reward = -50
+                reward -= 50
                 done = True
             if done == False and info["x_pos"] < self.max_x - 100:
                 done = True
